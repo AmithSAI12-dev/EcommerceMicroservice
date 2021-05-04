@@ -1,0 +1,34 @@
+server:
+#  hostname: 192.168.0.106
+  port: 8090
+  servlet:
+    context-path: /routeOne
+
+# Configuration for refreshing profiles
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+
+# Application Name Setup
+spring:
+  application:
+    name: RouteOne Microservice
+  # Setting the active profile
+  profiles:
+    active: dev
+  # Setting JPA Configuration
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  # Database Configurations
+  datasource:
+    url: jdbc:postgresql://${application.hostname}:${application.port}/${application.database}
+    username: ${application.username}
+    password: ${application.password}
+

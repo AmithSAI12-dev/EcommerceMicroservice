@@ -1,0 +1,13 @@
+application:
+  hostname: localhost
+  port: 5432
+  username: postgres
+  password: amithsai
+  database: ecommerce_db_test
+  cors:
+    allowed:
+      ip: http://localhost:4200
+
+
+
+
