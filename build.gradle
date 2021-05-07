@@ -1,6 +1,9 @@
 plugins {
 	id 'org.springframework.boot' version '2.4.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'com.diffplug.spotless' version '5.12.4'
+	id "org.sonarqube" version "3.2.0"
+	id 'jacoco'
 	id 'java'
 }
 
@@ -29,6 +32,36 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
+spotless {
+	java {
+		googleJavaFormat()
+		importOrder('java', 'javax', 'org', 'com', 'io')
+		removeUnusedImports()
+	}
+}
+
+compileJava.dependsOn('spotlessApply')
+
+jacoco {
+	toolVersion('0.8.6')
+}
+
+jacocoTestReport {
+	reports {
+		xml.enabled(true)
+		html.enabled(true)
+	}
+}
+
+sonarqube {
+	properties {
+		property 'sonar.host.url', 'http://localhost:9000'
+		property 'sonar.login' , 'admin'
+		property 'sonar.password', 'J*j*ts*K@|s$n'
+	}
+}
+
 test {
 	useJUnitPlatform()
+	finalizedBy(jacocoTestReport)
 }
