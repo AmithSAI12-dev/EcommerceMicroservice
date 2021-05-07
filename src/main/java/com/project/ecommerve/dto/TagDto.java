@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TagDto {
 
-    private String name;
-    private String description;
+  private String name;
+  private String description;
 }

@@ -11,8 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BrandDto {
 
-    private String name;
-    private String description;
-    private String imageUrl;
-    private String message;
+  private String name;
+  private String description;
+  private String imageUrl;
+  private String message;
 }
