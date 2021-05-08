@@ -4,10 +4,11 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.project.ecommerve.dto.CategoryDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import com.project.ecommerve.dto.CategoryDto;
 
 @Entity
 @Table
