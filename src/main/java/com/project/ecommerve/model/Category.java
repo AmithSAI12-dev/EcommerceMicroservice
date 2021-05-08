@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.project.ecommerve.dto.CategoryDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,4 +30,10 @@ public class Category {
       targetEntity = Product.class,
       mappedBy = "category")
   private List<Product> productList;
+
+  public Category(CategoryDto categoryDto) {
+    this.name = categoryDto.getName();
+    this.description = categoryDto.getDescription();
+    this.imageUrl = categoryDto.getImageUrl();
+  }
 }
