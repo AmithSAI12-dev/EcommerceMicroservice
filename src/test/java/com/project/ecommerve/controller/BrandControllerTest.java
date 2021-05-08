@@ -8,10 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Collections;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.ecommerve.dto.BrandDto;
-import com.project.ecommerve.exception.BrandDetailAlreadyExistsException;
-import com.project.ecommerve.exception.BrandDetailDoesNotExistsException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,6 +17,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.ecommerve.dto.BrandDto;
+import com.project.ecommerve.exception.BrandDetailAlreadyExistsException;
+import com.project.ecommerve.exception.BrandDetailDoesNotExistsException;
 import com.project.ecommerve.exception.NoBrandsAvailableException;
 import com.project.ecommerve.model.Brand;
 import com.project.ecommerve.service.BrandServiceImpl;
@@ -49,55 +49,63 @@ class BrandControllerTest {
   @Test
   void testAddBrand_returnsStatusCreated() throws Exception {
     when(brandServiceMock.persistBrandDetail(any(Brand.class))).thenReturn(new Brand());
-    mockMvc.perform(post("/brand/add")
-        .contentType(MediaType.APPLICATION_JSON_VALUE)
-        .content(new ObjectMapper().writeValueAsString(new Brand()))
-    ).andExpect(status().isCreated());
+    mockMvc
+        .perform(
+            post("/brand/add")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(new ObjectMapper().writeValueAsString(new Brand())))
+        .andExpect(status().isCreated());
   }
 
   @Test
   void testAddBrand_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(brandServiceMock.persistBrandDetail(any(Brand.class)))
-            .thenThrow(new BrandDetailAlreadyExistsException("Mock Exception"));
-    mockMvc.perform(post("/brand/add")
-        .contentType(MediaType.APPLICATION_JSON_VALUE)
-        .content(new ObjectMapper().writeValueAsString(new Brand()))
-    ).andExpect(status().isBadRequest());
+        .thenThrow(new BrandDetailAlreadyExistsException("Mock Exception"));
+    mockMvc
+        .perform(
+            post("/brand/add")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(new ObjectMapper().writeValueAsString(new Brand())))
+        .andExpect(status().isBadRequest());
   }
 
   @Test
   void testUpdateBrand_returnsStatusCreated() throws Exception {
     when(brandServiceMock.updateBrandDetail(any(Brand.class))).thenReturn(new Brand());
-    mockMvc.perform(put("/brand/update")
-        .contentType(MediaType.APPLICATION_JSON_VALUE)
-        .content(new ObjectMapper().writeValueAsString(new Brand()))
-    ).andExpect(status().isCreated());
+    mockMvc
+        .perform(
+            put("/brand/update")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(new ObjectMapper().writeValueAsString(new Brand())))
+        .andExpect(status().isCreated());
   }
 
   @Test
   void testUpdateBrand_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(brandServiceMock.updateBrandDetail(any(Brand.class)))
-            .thenThrow(new BrandDetailDoesNotExistsException("Mock Exception"));
-    mockMvc.perform(put("/brand/update")
-        .contentType(MediaType.APPLICATION_JSON_VALUE)
-        .content(new ObjectMapper().writeValueAsString(new Brand()))
-    ).andExpect(status().isBadRequest());
+        .thenThrow(new BrandDetailDoesNotExistsException("Mock Exception"));
+    mockMvc
+        .perform(
+            put("/brand/update")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(new ObjectMapper().writeValueAsString(new Brand())))
+        .andExpect(status().isBadRequest());
   }
 
   @Test
   void testDeleteBrand_returnsStatusOK() throws Exception {
     when(brandServiceMock.deleteBrandDetail(anyString())).thenReturn(new BrandDto());
-    mockMvc.perform(delete("/brand/delete")
-        .param("brandName", "Mock Brand Name")
-    ).andExpect(status().isOk());
+    mockMvc
+        .perform(delete("/brand/delete").param("brandName", "Mock Brand Name"))
+        .andExpect(status().isOk());
   }
 
   @Test
   void testDeleteBrand_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(brandServiceMock.deleteBrandDetail(anyString()))
-            .thenThrow(new BrandDetailDoesNotExistsException("Mock Exception"));
-    mockMvc.perform(delete("/brand/delete")
-        .param("brandName", "Mock Brand Name")
-    ).andExpect(status().isBadRequest());
+        .thenThrow(new BrandDetailDoesNotExistsException("Mock Exception"));
+    mockMvc
+        .perform(delete("/brand/delete").param("brandName", "Mock Brand Name"))
+        .andExpect(status().isBadRequest());
   }
 }

@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +46,7 @@ class BrandServiceImplTest {
     when(mockPage.getContent()).thenReturn(Collections.singletonList(new Brand()));
     List<Brand> brands = brandService.retrieveAllBrands(1, 1, "Mock Value");
     assertNotNull(brands);
+    verify(mockBrandRepository, atMostOnce()).findAll(any(Pageable.class));
   }
 
   @Test
@@ -54,6 +54,7 @@ class BrandServiceImplTest {
     when(mockBrandRepository.findAll(any(Pageable.class))).thenReturn(Page.empty());
     assertThrows(
         NoBrandsAvailableException.class, () -> brandService.retrieveAllBrands(1, 1, "Mock Value"));
+    verify(mockBrandRepository, atMostOnce()).findAll(any(Pageable.class));
   }
 
   @Test
@@ -62,6 +63,8 @@ class BrandServiceImplTest {
     when(mockBrandRepository.save(any(Brand.class))).thenReturn(new Brand());
     Brand brand = brandService.persistBrandDetail(mockBrand);
     assertNotNull(brand);
+    verify(mockBrandRepository, atMostOnce()).findById(anyString());
+    verify(mockBrandRepository, atMostOnce()).save(any(Brand.class));
   }
 
   @Test
@@ -69,6 +72,7 @@ class BrandServiceImplTest {
     when(mockBrandRepository.findById(anyString())).thenReturn(Optional.of(new Brand()));
     assertThrows(
         BrandDetailAlreadyExistsException.class, () -> brandService.persistBrandDetail(mockBrand));
+    verify(mockBrandRepository, atMostOnce()).findById(anyString());
   }
 
   @Test
@@ -77,6 +81,8 @@ class BrandServiceImplTest {
     when(mockBrandRepository.save(any(Brand.class))).thenReturn(mockBrand);
     Brand brand = brandService.updateBrandDetail(mockBrand);
     assertNotNull(brand);
+    verify(mockBrandRepository, atMostOnce()).findById(anyString());
+    verify(mockBrandRepository, atMostOnce()).save(any(Brand.class));
   }
 
   @Test
@@ -84,6 +90,7 @@ class BrandServiceImplTest {
     when(mockBrandRepository.findById(anyString())).thenReturn(Optional.empty());
     assertThrows(
         BrandDetailDoesNotExistsException.class, () -> brandService.updateBrandDetail(mockBrand));
+    verify(mockBrandRepository, atMostOnce()).findById(anyString());
   }
 
   @Test
@@ -92,6 +99,8 @@ class BrandServiceImplTest {
     doNothing().when(mockBrandRepository).deleteById(anyString());
     BrandDto brandDto = brandService.deleteBrandDetail("Mock Name");
     assertNotNull(brandDto);
+    verify(mockBrandRepository, atMostOnce()).findById(anyString());
+    verify(mockBrandRepository, atMostOnce()).deleteById(anyString());
   }
 
   @Test
@@ -99,5 +108,6 @@ class BrandServiceImplTest {
     when(mockBrandRepository.findById(anyString())).thenReturn(Optional.empty());
     assertThrows(
         BrandDetailDoesNotExistsException.class, () -> brandService.deleteBrandDetail("Mock Name"));
+    verify(mockBrandRepository, atMostOnce()).findById(anyString());
   }
 }
