@@ -1,5 +1,6 @@
 package com.project.ecommerve.model;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -58,6 +59,8 @@ public class Product {
   private String image4;
 
   private boolean available;
+
+  private LocalDate createDate;
 
   @ManyToOne(
       cascade = {CascadeType.MERGE, CascadeType.PERSIST},
