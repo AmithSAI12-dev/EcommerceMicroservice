@@ -10,7 +10,9 @@ import com.project.ecommerve.model.Product;
 
 public interface ProductService {
 
-  public List<Product> retrieveAllProduct(SearchDto searchDto, Integer page, Integer size, String sortBY) throws NoProductAvailableException;
+  public List<Product> retrieveAllProduct(
+      SearchDto searchDto, Integer page, Integer size, String sortBY)
+      throws NoProductAvailableException;
 
   public Product persistProduct(Product product);
 

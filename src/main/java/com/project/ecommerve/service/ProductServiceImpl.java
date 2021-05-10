@@ -30,7 +30,9 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public List<Product> retrieveAllProduct(SearchDto searchDto, Integer page, Integer size, String sortBy) throws NoProductAvailableException {
+  public List<Product> retrieveAllProduct(
+      SearchDto searchDto, Integer page, Integer size, String sortBy)
+      throws NoProductAvailableException {
     List<Product> products;
     if (searchDto != null) {
       // If there is search condition then fetch all products with search condition and pagination
