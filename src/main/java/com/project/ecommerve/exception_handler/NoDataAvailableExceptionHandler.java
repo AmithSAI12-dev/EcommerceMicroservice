@@ -10,11 +10,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.project.ecommerve.dto.ExceptionFormat;
 import com.project.ecommerve.exception.NoBrandsAvailableException;
 import com.project.ecommerve.exception.NoCategoryAvailableException;
+import com.project.ecommerve.exception.NoProductAvailableException;
 
 @RestControllerAdvice
 public class NoDataAvailableExceptionHandler {
 
-  @ExceptionHandler(value = {NoBrandsAvailableException.class, NoCategoryAvailableException.class})
+  @ExceptionHandler(
+      value = {
+        NoBrandsAvailableException.class,
+        NoCategoryAvailableException.class,
+        NoProductAvailableException.class
+      })
   public ResponseEntity<ExceptionFormat> handleException(Exception e) {
     return new ResponseEntity<>(
         new ExceptionFormat(e.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now()),

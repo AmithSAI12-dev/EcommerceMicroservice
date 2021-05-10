@@ -2,7 +2,7 @@ server:
 #  hostname: 192.168.0.106
   port: 8090
   servlet:
-    context-path: /routeOne
+    context-path: /api
 
 # Configuration for refreshing profiles
 management:

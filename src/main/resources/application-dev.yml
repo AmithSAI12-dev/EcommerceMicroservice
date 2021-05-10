@@ -8,6 +8,8 @@ application:
     allowed:
       ip: http://localhost:4200
 
-
+spring:
+  jpa:
+    show-sql: true
 
 

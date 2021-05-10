@@ -8,4 +8,5 @@ public final class ExceptionMessage {
   public static final String CATEGORY_ALREADY_EXISTS = "Category Already Exists";
   public static final String CATEGORY_DOES_NOT_EXISTS = "Category Does Not Exists";
   public static final String PRODUCT_DOES_NOT_EXISTS = "Product Does Not Exists";
+  public static final String NO_PRODUCT_AVAILABLE = "No Product Available";
 }
