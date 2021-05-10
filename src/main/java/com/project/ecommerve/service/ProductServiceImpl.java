@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -29,19 +30,23 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public List<Product> retrieveAllProduct(SearchDto searchDto) throws NoProductAvailableException {
+  public List<Product> retrieveAllProduct(SearchDto searchDto, Integer page, Integer size, String sortBy) throws NoProductAvailableException {
     List<Product> products;
     if (searchDto != null) {
+      // If there is search condition then fetch all products with search condition and pagination
       products =
           productRepository
-              .findAll(buildSpecification(searchDto), PageRequest.of(0, 10))
+              .findAll(buildSpecification(searchDto), PageRequest.of(page, size, Sort.by(sortBy)))
               .getContent();
     } else {
+      // Else fetch all products with pagination
       products = productRepository.findAll(PageRequest.of(0, 10)).getContent();
     }
     if (products.isEmpty()) {
+      // If the list is empty then throwing exception
       throw new NoProductAvailableException(ExceptionMessage.NO_PRODUCT_AVAILABLE);
     }
+    // Returning product list
     return products;
   }
 

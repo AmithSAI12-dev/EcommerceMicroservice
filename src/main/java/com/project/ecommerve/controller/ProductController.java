@@ -25,8 +25,8 @@ public class ProductController {
 
   @GetMapping(value = "/")
   public ResponseEntity<List<Product>> getAllProducts(
-      @RequestBody(required = false) SearchDto searchDto) throws NoProductAvailableException {
-    List<Product> products = productService.retrieveAllProduct(searchDto);
+      @RequestBody(required = false) SearchDto searchDto, @RequestParam(defaultValue = "0", required = false) Integer page, @RequestParam(defaultValue = "10", required = false) Integer size, @RequestParam(defaultValue = "name", required = false) String sortBy) throws NoProductAvailableException {
+    List<Product> products = productService.retrieveAllProduct(searchDto, page, size, sortBy);
     return new ResponseEntity<>(products, HttpStatus.OK);
   }
 }
