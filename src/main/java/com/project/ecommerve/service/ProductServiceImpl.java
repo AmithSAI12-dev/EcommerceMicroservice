@@ -101,6 +101,8 @@ public class ProductServiceImpl implements ProductService {
         optionalProduct.get().isAvailable(),
         optionalProduct.get().getDescription(),
         optionalProduct.get().getCreateDate(),
+        optionalProduct.get().getCategory().getName(),
+        optionalProduct.get().getBrand().getName(),
         SUCCESS_MESSAGE);
   }
 

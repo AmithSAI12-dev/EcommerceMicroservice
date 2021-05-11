@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.project.ecommerve.dto.ProductDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -58,7 +59,8 @@ public class Product {
   @Column(columnDefinition = "TEXT")
   private String image4;
 
-  private boolean available;
+  @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
+  private boolean available = true;
 
   private LocalDate createDate;
 
@@ -85,4 +87,18 @@ public class Product {
       joinColumns = @JoinColumn(name = "id"),
       inverseJoinColumns = @JoinColumn(name = "name"))
   private Set<Tag> tags;
+
+  public Product(ProductDto productDto) {
+    this.name = productDto.getName();
+    this.description = productDto.getDescription();
+    this.createDate = productDto.getLocalDate()!=null? productDto.getLocalDate() : LocalDate.now();
+    this.discount = productDto.getDiscount();
+    this.image1 = productDto.getImage1();
+    this.image2 = productDto.getImage2();
+    this.image3 = productDto.getImage3();
+    this.image4 = productDto.getImage4();
+    this.price = productDto.getPrice();
+    this.category = new Category(productDto.getCategory());
+    this.brand = new Brand(productDto.getBrand());
+  }
 }

@@ -37,4 +37,8 @@ public class Brand {
     this.description = brandDto.getDescription();
     this.imageUrl = brandDto.getImageUrl();
   }
+
+  public Brand(String name) {
+    this.name = name;
+  }
 }

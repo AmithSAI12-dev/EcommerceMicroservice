@@ -14,7 +14,7 @@ management:
 # Application Name Setup
 spring:
   application:
-    name: RouteOne Microservice
+    name: Ecommerce Microservice
   # Setting the active profile
   profiles:
     active: dev

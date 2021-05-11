@@ -24,5 +24,8 @@ public class ProductDto {
   private boolean available;
   private String description;
   private LocalDate localDate;
+  private String category;
+  private String brand;
   private String message;
+
 }

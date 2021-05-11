@@ -37,4 +37,8 @@ public class Category {
     this.description = categoryDto.getDescription();
     this.imageUrl = categoryDto.getImageUrl();
   }
+
+  public Category(String name) {
+    this.name = name;
+  }
 }
