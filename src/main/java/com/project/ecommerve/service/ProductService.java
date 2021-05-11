@@ -14,6 +14,8 @@ public interface ProductService {
       SearchDto searchDto, Integer page, Integer size, String sortBY)
       throws NoProductAvailableException;
 
+  public Product retrieveProduct(String productID) throws ProductDoesNotExistsException;
+
   public Product persistProduct(Product product);
 
   public Product updateProduct(Product product) throws ProductDoesNotExistsException;

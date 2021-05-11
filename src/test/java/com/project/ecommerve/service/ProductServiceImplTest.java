@@ -87,6 +87,22 @@ class ProductServiceImplTest {
   }
 
   @Test
+  void testRetrieveAllProduct_returnsProductList_withBranAndCategorySearchFilter()
+      throws NoProductAvailableException {
+    SearchDto searchDto = new SearchDto();
+    searchDto.setCategories(Collections.singletonList("Mock Category"));
+    searchDto.setBrands(Collections.singletonList("Mock Brand"));
+    when(productRepositoryMock.findAll(any(Specification.class), any(Pageable.class)))
+        .thenReturn(productPageMock);
+    when(productPageMock.getContent()).thenReturn(Collections.singletonList(productMock));
+    List<Product> productList = productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
+    assertNotNull(productList);
+    verify(productRepositoryMock, atMostOnce())
+        .findAll(any(Specification.class), any(Pageable.class));
+    verify(productPageMock, atMostOnce()).getContent();
+  }
+
+  @Test
   void testRetrieveAllProduct_returnsProductList_withAllSearchFilter()
       throws NoProductAvailableException {
     SearchDto searchDto = new SearchDto();
@@ -122,6 +138,21 @@ class ProductServiceImplTest {
         NoProductAvailableException.class,
         () -> productService.retrieveAllProduct(null, 0, 10, "mock"));
     verify(productRepositoryMock, atMostOnce()).findAll(any(Pageable.class));
+  }
+
+  @Test
+  void testRetrieveProduct_returnsProduct() throws ProductDoesNotExistsException {
+    when(productRepositoryMock.findById(anyString())).thenReturn(Optional.of(productMock));
+    Product product = productService.retrieveProduct("Mock ID");
+    assertNotNull(product);
+    verify(productRepositoryMock, atMostOnce()).findById(anyString());
+  }
+
+  @Test
+  void testRetrieveProduct_throwsException_whenProductDoesNotExists() {
+    when(productRepositoryMock.findById(anyString())).thenReturn(Optional.empty());
+    assertThrows(ProductDoesNotExistsException.class, () -> productService.retrieveProduct("Mock ID"));
+    verify(productRepositoryMock, atMostOnce()).findById(anyString());
   }
 
   @Test

@@ -53,6 +53,17 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
+  public Product retrieveProduct(String productID) throws ProductDoesNotExistsException {
+    Optional<Product> optionalProduct = productRepository.findById(productID);
+    if(optionalProduct.isEmpty()) {
+      // If the product does not exists then throwing exception
+      throw new ProductDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
+    }
+    // Returning product
+    return optionalProduct.get();
+  }
+
+  @Override
   public Product persistProduct(Product product) {
     // Persisting Product
     return productRepository.save(product);

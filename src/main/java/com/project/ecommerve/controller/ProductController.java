@@ -2,6 +2,8 @@ package com.project.ecommerve.controller;
 
 import java.util.List;
 
+import com.project.ecommerve.dto.ProductDto;
+import com.project.ecommerve.exception.ProductDoesNotExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +34,17 @@ public class ProductController {
       throws NoProductAvailableException {
     List<Product> products = productService.retrieveAllProduct(searchDto, page, size, sortBy);
     return new ResponseEntity<>(products, HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/find")
+  public ResponseEntity<Product> getProduct(@RequestParam String productId) throws ProductDoesNotExistsException {
+    Product product = productService.retrieveProduct(productId);
+    return new ResponseEntity<>(product, HttpStatus.OK);
+  }
+
+  @DeleteMapping(value = "/delete")
+  public ResponseEntity<ProductDto> deleteProduct(@RequestParam String productId) throws ProductDoesNotExistsException {
+    ProductDto productDto = productService.deleteProduct(productId);
+    return new ResponseEntity<>(productDto, HttpStatus.OK);
   }
 }
