@@ -22,7 +22,9 @@ import org.springframework.data.jpa.domain.Specification;
 import com.project.ecommerve.dto.ProductDto;
 import com.project.ecommerve.dto.SearchDto;
 import com.project.ecommerve.exception.NoProductAvailableException;
-import com.project.ecommerve.exception.ProductDoesNotExistsException;
+import com.project.ecommerve.exception.ProductDetailDoesNotExistsException;
+import com.project.ecommerve.model.Brand;
+import com.project.ecommerve.model.Category;
 import com.project.ecommerve.model.Product;
 import com.project.ecommerve.repository.ProductRepository;
 
@@ -38,6 +40,8 @@ class ProductServiceImplTest {
   static void setUp() {
     productMock = new Product();
     productMock.setId("Mock Product ID");
+    productMock.setCategory(new Category("Mock Name"));
+    productMock.setBrand(new Brand("Mock Name"));
   }
 
   @Test
@@ -141,7 +145,7 @@ class ProductServiceImplTest {
   }
 
   @Test
-  void testRetrieveProduct_returnsProduct() throws ProductDoesNotExistsException {
+  void testRetrieveProduct_returnsProduct() throws ProductDetailDoesNotExistsException {
     when(productRepositoryMock.findById(anyString())).thenReturn(Optional.of(productMock));
     Product product = productService.retrieveProduct("Mock ID");
     assertNotNull(product);
@@ -151,7 +155,8 @@ class ProductServiceImplTest {
   @Test
   void testRetrieveProduct_throwsException_whenProductDoesNotExists() {
     when(productRepositoryMock.findById(anyString())).thenReturn(Optional.empty());
-    assertThrows(ProductDoesNotExistsException.class, () -> productService.retrieveProduct("Mock ID"));
+    assertThrows(
+        ProductDetailDoesNotExistsException.class, () -> productService.retrieveProduct("Mock ID"));
     verify(productRepositoryMock, atMostOnce()).findById(anyString());
   }
 
@@ -164,7 +169,7 @@ class ProductServiceImplTest {
   }
 
   @Test
-  void testUpdateProduct_returnsProduct() throws ProductDoesNotExistsException {
+  void testUpdateProduct_returnsProduct() throws ProductDetailDoesNotExistsException {
     when(productRepositoryMock.findById(anyString())).thenReturn(Optional.of(productMock));
     when(productRepositoryMock.save(any(Product.class))).thenReturn(productMock);
     Product product = productService.updateProduct(productMock);
@@ -177,12 +182,12 @@ class ProductServiceImplTest {
   void testUpdateProduct_throwsException_whenProductDoesNotExists() {
     when(productRepositoryMock.findById(anyString())).thenReturn(Optional.empty());
     assertThrows(
-        ProductDoesNotExistsException.class, () -> productService.updateProduct(productMock));
+        ProductDetailDoesNotExistsException.class, () -> productService.updateProduct(productMock));
     verify(productRepositoryMock, atMostOnce()).findById(anyString());
   }
 
   @Test
-  void testDeleteProduct_returnsProductDto() throws ProductDoesNotExistsException {
+  void testDeleteProduct_returnsProductDto() throws ProductDetailDoesNotExistsException {
     when(productRepositoryMock.findById(anyString())).thenReturn(Optional.of(productMock));
     doNothing().when(productRepositoryMock).deleteById(anyString());
     ProductDto productDto = productService.deleteProduct("Mock Product ID");
@@ -194,7 +199,8 @@ class ProductServiceImplTest {
   void testDeleteProduct_throwsException_whenProductDoesNotExists() {
     when(productRepositoryMock.findById(anyString())).thenReturn(Optional.empty());
     assertThrows(
-        ProductDoesNotExistsException.class, () -> productService.deleteProduct("Mock Product ID"));
+        ProductDetailDoesNotExistsException.class,
+        () -> productService.deleteProduct("Mock Product ID"));
     verify(productRepositoryMock, atMostOnce()).findById(anyString());
   }
 }

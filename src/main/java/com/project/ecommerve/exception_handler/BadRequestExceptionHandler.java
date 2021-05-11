@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.project.ecommerve.dto.ExceptionFormat;
-import com.project.ecommerve.exception.BrandDetailAlreadyExistsException;
-import com.project.ecommerve.exception.BrandDetailDoesNotExistsException;
-import com.project.ecommerve.exception.CategoryDetailAlreadyExistsException;
-import com.project.ecommerve.exception.CategoryDetailDoesNotExistsException;
+import com.project.ecommerve.exception.*;
 
 @RestControllerAdvice
 public class BadRequestExceptionHandler {
@@ -21,7 +18,8 @@ public class BadRequestExceptionHandler {
         BrandDetailDoesNotExistsException.class,
         BrandDetailAlreadyExistsException.class,
         CategoryDetailDoesNotExistsException.class,
-        CategoryDetailAlreadyExistsException.class
+        CategoryDetailAlreadyExistsException.class,
+        ProductDetailDoesNotExistsException.class
       })
   public ResponseEntity<ExceptionFormat> handleException(Exception e) {
     return new ResponseEntity<>(

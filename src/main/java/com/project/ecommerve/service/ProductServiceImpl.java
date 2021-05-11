@@ -14,7 +14,7 @@ import com.project.ecommerve.constants.ExceptionMessage;
 import com.project.ecommerve.dto.ProductDto;
 import com.project.ecommerve.dto.SearchDto;
 import com.project.ecommerve.exception.NoProductAvailableException;
-import com.project.ecommerve.exception.ProductDoesNotExistsException;
+import com.project.ecommerve.exception.ProductDetailDoesNotExistsException;
 import com.project.ecommerve.model.Product;
 import com.project.ecommerve.repository.ProductRepository;
 
@@ -53,11 +53,11 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Product retrieveProduct(String productID) throws ProductDoesNotExistsException {
+  public Product retrieveProduct(String productID) throws ProductDetailDoesNotExistsException {
     Optional<Product> optionalProduct = productRepository.findById(productID);
-    if(optionalProduct.isEmpty()) {
+    if (optionalProduct.isEmpty()) {
       // If the product does not exists then throwing exception
-      throw new ProductDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
+      throw new ProductDetailDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
     }
     // Returning product
     return optionalProduct.get();
@@ -70,21 +70,21 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Product updateProduct(Product product) throws ProductDoesNotExistsException {
+  public Product updateProduct(Product product) throws ProductDetailDoesNotExistsException {
     if (productRepository.findById(product.getId()).isEmpty()) {
       // If Product does not exists then throwing exception
-      throw new ProductDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
+      throw new ProductDetailDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
     }
     // Returning Product
     return productRepository.save(product);
   }
 
   @Override
-  public ProductDto deleteProduct(String productId) throws ProductDoesNotExistsException {
+  public ProductDto deleteProduct(String productId) throws ProductDetailDoesNotExistsException {
     Optional<Product> optionalProduct = productRepository.findById(productId);
     if (optionalProduct.isEmpty()) {
       // If Product does not exists then throwing Exception
-      throw new ProductDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
+      throw new ProductDetailDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
     }
     // Deleting the product
     productRepository.deleteById(productId);
