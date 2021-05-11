@@ -5,7 +5,6 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import com.project.ecommerve.dto.ProductDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +12,7 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.project.ecommerve.configuration.ProductIdGeneratorConfig;
+import com.project.ecommerve.dto.ProductDto;
 
 @Entity
 @Table
@@ -91,7 +91,8 @@ public class Product {
   public Product(ProductDto productDto) {
     this.name = productDto.getName();
     this.description = productDto.getDescription();
-    this.createDate = productDto.getLocalDate()!=null? productDto.getLocalDate() : LocalDate.now();
+    this.createDate =
+        productDto.getLocalDate() != null ? productDto.getLocalDate() : LocalDate.now();
     this.discount = productDto.getDiscount();
     this.image1 = productDto.getImage1();
     this.image2 = productDto.getImage2();
