@@ -42,6 +42,18 @@ public class ProductController {
     return new ResponseEntity<>(product, HttpStatus.OK);
   }
 
+  @PostMapping(value = "/add")
+  public ResponseEntity<Product> addProduct(@RequestBody ProductDto productDto) {
+    Product product = productService.persistProduct(new Product(productDto));
+    return new ResponseEntity<>(product, HttpStatus.CREATED);
+  }
+
+  @PutMapping(value = "/update")
+  public ResponseEntity<Product> updateProduct(@RequestBody ProductDto productDto) throws ProductDoesNotExistsException {
+    Product product = productService.updateProduct(new Product(productDto));
+    return new ResponseEntity<>(product, HttpStatus.CREATED);
+  }
+
   @DeleteMapping(value = "/delete")
   public ResponseEntity<ProductDto> deleteProduct(@RequestParam String productId) throws ProductDoesNotExistsException {
     ProductDto productDto = productService.deleteProduct(productId);
