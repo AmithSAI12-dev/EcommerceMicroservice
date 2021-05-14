@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.ecommerve.dto.CategoryDto;
 
 @Entity
@@ -30,6 +31,7 @@ public class Category {
       fetch = FetchType.LAZY,
       targetEntity = Product.class,
       mappedBy = "category")
+  @JsonBackReference
   private List<Product> productList;
 
   public Category(CategoryDto categoryDto) {

@@ -2,6 +2,7 @@ package com.project.ecommerve.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -93,10 +94,7 @@ public class ProductServiceImpl implements ProductService {
         optionalProduct.get().getId(),
         optionalProduct.get().getName(),
         optionalProduct.get().getPrice(),
-        optionalProduct.get().getImage1(),
-        optionalProduct.get().getImage2(),
-        optionalProduct.get().getImage3(),
-        optionalProduct.get().getImage4(),
+        optionalProduct.get().getImages().stream().collect(Collectors.toList()),
         optionalProduct.get().getDiscount(),
         optionalProduct.get().isAvailable(),
         optionalProduct.get().getDescription(),

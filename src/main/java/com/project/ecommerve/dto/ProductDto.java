@@ -1,6 +1,7 @@
 package com.project.ecommerve.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,10 +17,7 @@ public class ProductDto {
   private String id;
   private String name;
   private double price;
-  private String image1;
-  private String image2;
-  private String image3;
-  private String image4;
+  private List<String> images;
   private double discount;
   private boolean available;
   private String description;
