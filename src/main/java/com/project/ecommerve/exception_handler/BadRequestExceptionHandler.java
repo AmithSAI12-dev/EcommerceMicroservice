@@ -19,7 +19,9 @@ public class BadRequestExceptionHandler {
         BrandDetailAlreadyExistsException.class,
         CategoryDetailDoesNotExistsException.class,
         CategoryDetailAlreadyExistsException.class,
-        ProductDetailDoesNotExistsException.class
+        ProductDetailDoesNotExistsException.class,
+        TagAlreadyExistsException.class,
+        TagDoesNotExistsException.class
       })
   public ResponseEntity<ExceptionFormat> handleException(Exception e) {
     return new ResponseEntity<>(
