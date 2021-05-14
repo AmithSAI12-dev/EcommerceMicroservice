@@ -1,6 +1,7 @@
 package com.project.ecommerve.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import lombok.Setter;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.ecommerve.configuration.ProductIdGeneratorConfig;
 import com.project.ecommerve.dto.ProductDto;
 
@@ -47,28 +49,27 @@ public class Product {
   private double price;
   private double discount;
 
-  @Column(columnDefinition = "TEXT")
-  private String image1;
-
-  @Column(columnDefinition = "TEXT")
-  private String image2;
-
-  @Column(columnDefinition = "TEXT")
-  private String image3;
-
-  @Column(columnDefinition = "TEXT")
-  private String image4;
+  @ElementCollection
+  @CollectionTable(name = "product_img", joinColumns = @JoinColumn(name = "product_id"))
+  @Column(name = "image", columnDefinition = "TEXT")
+  private Set<String> images;
 
   @Column(columnDefinition = "BOOLEAN DEFAULT TRUE")
   private boolean available = true;
 
   private LocalDate createDate;
 
+  @ElementCollection
+  @CollectionTable(name = "product_size", joinColumns = @JoinColumn(name = "product_id"))
+  @Column(name = "size")
+  private Set<String> size;
+
   @ManyToOne(
       cascade = {CascadeType.MERGE, CascadeType.PERSIST},
       fetch = FetchType.LAZY,
       targetEntity = Brand.class)
   @JoinColumn(name = "brandName", referencedColumnName = "name")
+  @JsonManagedReference
   private Brand brand;
 
   @ManyToOne(
@@ -76,6 +77,7 @@ public class Product {
       fetch = FetchType.LAZY,
       targetEntity = Category.class)
   @JoinColumn(name = "categoryName", referencedColumnName = "name")
+  @JsonManagedReference
   private Category category;
 
   @ManyToMany(
@@ -94,10 +96,7 @@ public class Product {
     this.createDate =
         productDto.getLocalDate() != null ? productDto.getLocalDate() : LocalDate.now();
     this.discount = productDto.getDiscount();
-    this.image1 = productDto.getImage1();
-    this.image2 = productDto.getImage2();
-    this.image3 = productDto.getImage3();
-    this.image4 = productDto.getImage4();
+    this.images = new HashSet<>(productDto.getImages());
     this.price = productDto.getPrice();
     this.category = new Category(productDto.getCategory());
     this.brand = new Brand(productDto.getBrand());
