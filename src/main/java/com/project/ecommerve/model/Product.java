@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.ecommerve.configuration.ProductIdGeneratorConfig;
 import com.project.ecommerve.dto.ProductDto;
 
@@ -36,7 +37,7 @@ public class Product {
             value = "PD_"),
         @org.hibernate.annotations.Parameter(
             name = ProductIdGeneratorConfig.NUMBER_FORMAT_PARAMETER,
-            value = "%5d")
+            value = "%05d")
       })
   private String id;
 
@@ -48,7 +49,7 @@ public class Product {
   private double price;
   private double discount;
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "product_img", joinColumns = @JoinColumn(name = "product_id"))
   @Column(name = "image", columnDefinition = "TEXT")
   private Set<String> images;
@@ -58,28 +59,30 @@ public class Product {
 
   private LocalDate createDate;
 
-  @ElementCollection
+  @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(name = "product_size", joinColumns = @JoinColumn(name = "product_id"))
   @Column(name = "size")
   private Set<String> size;
 
   @ManyToOne(
-      cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+      cascade = {CascadeType.MERGE},
       fetch = FetchType.LAZY,
       targetEntity = Brand.class)
   @JoinColumn(name = "brandName", referencedColumnName = "name")
+  @JsonIgnore
   private Brand brand;
 
   @ManyToOne(
-      cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+      cascade = {CascadeType.MERGE},
       fetch = FetchType.LAZY,
       targetEntity = Category.class)
   @JoinColumn(name = "categoryName", referencedColumnName = "name")
+  @JsonIgnore
   private Category category;
 
   @ManyToMany(
-      cascade = {CascadeType.MERGE, CascadeType.PERSIST},
-      fetch = FetchType.LAZY,
+      cascade = {CascadeType.MERGE},
+      fetch = FetchType.EAGER,
       targetEntity = Tag.class)
   @JoinTable(
       name = "product_tags",
@@ -93,9 +96,15 @@ public class Product {
     this.createDate =
         productDto.getLocalDate() != null ? productDto.getLocalDate() : LocalDate.now();
     this.discount = productDto.getDiscount();
-    this.images = new HashSet<>(productDto.getImages());
+    this.images = productDto.getImages() != null ? new HashSet<>(productDto.getImages()) : null;
+    this.size = productDto.getSize() != null ? new HashSet<>(productDto.getSize()) : null;
     this.price = productDto.getPrice();
     this.category = new Category(productDto.getCategory());
     this.brand = new Brand(productDto.getBrand());
+    this.tags = productDto.getTags() != null ? new HashSet<>(productDto.getTags()) : null;
+  }
+
+  public Product(String id) {
+    this.id = id;
   }
 }

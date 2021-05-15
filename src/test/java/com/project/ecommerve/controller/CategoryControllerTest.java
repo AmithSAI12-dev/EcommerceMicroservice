@@ -49,7 +49,7 @@ class CategoryControllerTest {
     mockMvc
         .perform(
             get("/category/").param("page", "0").param("size", "10").param("sortBy", "Mock Name"))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isNoContent());
   }
 
   @Test

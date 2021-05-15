@@ -43,7 +43,7 @@ class BrandControllerTest {
   void testGetAllBrands_returnsStatusBadRequest_whenExceptionISThrown() throws Exception {
     when(brandServiceMock.retrieveAllBrands(anyInt(), anyInt(), anyString()))
         .thenThrow(new NoBrandsAvailableException("Mock Exception"));
-    mockMvc.perform(get("/brand/")).andExpect(status().isBadRequest());
+    mockMvc.perform(get("/brand/")).andExpect(status().isNoContent());
   }
 
   @Test
