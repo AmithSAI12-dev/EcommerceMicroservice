@@ -2,7 +2,6 @@ package com.project.ecommerve.exception_handler;
 
 import java.time.ZonedDateTime;
 
-import com.project.ecommerve.exception.NoTagsAvailableException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,6 +11,7 @@ import com.project.ecommerve.dto.ExceptionFormat;
 import com.project.ecommerve.exception.NoBrandsAvailableException;
 import com.project.ecommerve.exception.NoCategoryAvailableException;
 import com.project.ecommerve.exception.NoProductAvailableException;
+import com.project.ecommerve.exception.NoTagsAvailableException;
 
 @RestControllerAdvice
 public class NoDataAvailableExceptionHandler {

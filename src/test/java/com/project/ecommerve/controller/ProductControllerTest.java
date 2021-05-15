@@ -58,7 +58,7 @@ class ProductControllerTest {
                 .param("sortBy", "Mock Name")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(new SearchDto())))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isNoContent());
   }
 
   @Test

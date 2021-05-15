@@ -4,10 +4,12 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import com.project.ecommerve.dto.TagDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.ecommerve.dto.TagDto;
 
 @Entity
 @Table
@@ -22,10 +24,11 @@ public class Tag {
   private String description;
 
   @ManyToMany(
-      cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+      cascade = {CascadeType.MERGE},
       fetch = FetchType.LAZY,
       mappedBy = "tags",
       targetEntity = Product.class)
+  @JsonIgnore
   private Set<Product> productList;
 
   public Tag(TagDto tagDto) {

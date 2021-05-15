@@ -94,13 +94,21 @@ public class ProductServiceImpl implements ProductService {
         optionalProduct.get().getId(),
         optionalProduct.get().getName(),
         optionalProduct.get().getPrice(),
-        optionalProduct.get().getImages().stream().collect(Collectors.toList()),
+        optionalProduct.get().getImages() != null
+            ? optionalProduct.get().getImages().stream().collect(Collectors.toList())
+            : null,
+        optionalProduct.get().getSize() != null
+            ? optionalProduct.get().getSize().stream().collect(Collectors.toList())
+            : null,
+        optionalProduct.get().getTags() != null
+            ? optionalProduct.get().getTags().stream().collect(Collectors.toList())
+            : null,
         optionalProduct.get().getDiscount(),
         optionalProduct.get().isAvailable(),
         optionalProduct.get().getDescription(),
         optionalProduct.get().getCreateDate(),
-        optionalProduct.get().getCategory().getName(),
-        optionalProduct.get().getBrand().getName(),
+        null,
+        null,
         SUCCESS_MESSAGE);
   }
 
