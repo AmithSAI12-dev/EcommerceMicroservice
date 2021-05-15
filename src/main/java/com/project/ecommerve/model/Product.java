@@ -12,7 +12,6 @@ import lombok.Setter;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.ecommerve.configuration.ProductIdGeneratorConfig;
 import com.project.ecommerve.dto.ProductDto;
 
@@ -69,7 +68,6 @@ public class Product {
       fetch = FetchType.LAZY,
       targetEntity = Brand.class)
   @JoinColumn(name = "brandName", referencedColumnName = "name")
-  @JsonManagedReference
   private Brand brand;
 
   @ManyToOne(
@@ -77,7 +75,6 @@ public class Product {
       fetch = FetchType.LAZY,
       targetEntity = Category.class)
   @JoinColumn(name = "categoryName", referencedColumnName = "name")
-  @JsonManagedReference
   private Category category;
 
   @ManyToMany(

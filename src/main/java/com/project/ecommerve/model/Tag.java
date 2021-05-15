@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.project.ecommerve.dto.TagDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,4 +27,9 @@ public class Tag {
       mappedBy = "tags",
       targetEntity = Product.class)
   private Set<Product> productList;
+
+  public Tag(TagDto tagDto) {
+    this.name = tagDto.getName();
+    this.description = tagDto.getDescription();
+  }
 }
