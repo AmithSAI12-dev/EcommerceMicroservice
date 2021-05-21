@@ -10,12 +10,12 @@ import com.project.ecommerve.model.Brand;
 
 public interface BrandService {
 
-  public List<Brand> retrieveAllBrands(Integer page, Integer size, String sortBy)
+  List<Brand> retrieveAllBrands(Integer page, Integer size, String sortBy)
       throws NoBrandsAvailableException;
 
-  public Brand persistBrandDetail(Brand brand) throws BrandDetailAlreadyExistsException;
+  Brand persistBrandDetail(Brand brand) throws BrandDetailAlreadyExistsException;
 
-  public Brand updateBrandDetail(Brand brand) throws BrandDetailDoesNotExistsException;
+  Brand updateBrandDetail(Brand brand) throws BrandDetailDoesNotExistsException;
 
-  public BrandDto deleteBrandDetail(String name) throws BrandDetailDoesNotExistsException;
+  BrandDto deleteBrandDetail(String name) throws BrandDetailDoesNotExistsException;
 }

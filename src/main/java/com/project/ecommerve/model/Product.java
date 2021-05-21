@@ -33,10 +33,10 @@ public class Product {
             name = ProductIdGeneratorConfig.INCREMENT_PARAM,
             value = "1"),
         @org.hibernate.annotations.Parameter(
-            name = ProductIdGeneratorConfig.VALUE_PREFIX_FORMAT,
+            name = ProductIdGeneratorConfig.PREFIX_FORMAT,
             value = "PD_"),
         @org.hibernate.annotations.Parameter(
-            name = ProductIdGeneratorConfig.NUMBER_FORMAT_PARAMETER,
+            name = ProductIdGeneratorConfig.NUMBER_FORMAT,
             value = "%05d")
       })
   private String id;
@@ -90,7 +90,7 @@ public class Product {
       inverseJoinColumns = @JoinColumn(name = "name"))
   private Set<Tag> tags;
 
-  public Product(ProductDto productDto) {
+  public Product(final ProductDto productDto) {
     this.name = productDto.getName();
     this.description = productDto.getDescription();
     this.createDate =
@@ -104,7 +104,7 @@ public class Product {
     this.tags = productDto.getTags() != null ? new HashSet<>(productDto.getTags()) : null;
   }
 
-  public Product(String id) {
+  public Product(final String id) {
     this.id = id;
   }
 }

@@ -10,15 +10,14 @@ import com.project.ecommerve.model.Product;
 
 public interface ProductService {
 
-  public List<Product> retrieveAllProduct(
-      SearchDto searchDto, Integer page, Integer size, String sortBY)
+  List<Product> retrieveAllProduct(SearchDto searchDto, Integer page, Integer size, String sortBY)
       throws NoProductAvailableException;
 
-  public Product retrieveProduct(String productID) throws ProductDetailDoesNotExistsException;
+  Product retrieveProduct(String productID) throws ProductDetailDoesNotExistsException;
 
-  public Product persistProduct(Product product);
+  Product persistProduct(Product product);
 
-  public Product updateProduct(Product product) throws ProductDetailDoesNotExistsException;
+  Product updateProduct(Product product) throws ProductDetailDoesNotExistsException;
 
-  public ProductDto deleteProduct(String productId) throws ProductDetailDoesNotExistsException;
+  ProductDto deleteProduct(String productId) throws ProductDetailDoesNotExistsException;
 }

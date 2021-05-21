@@ -43,8 +43,8 @@ class CategoryServiceImplTest {
   void testRetrieveAllCategories_returnsCategoryList() throws NoCategoryAvailableException {
     when(categoryRepositoryMock.findAll(any(Pageable.class))).thenReturn(categoryPageMock);
     when(categoryPageMock.getContent()).thenReturn(Collections.singletonList(categoryMock));
-    List<Category> categories = categoryService.retrieveAllCategories(1, 1, "Mock Sort");
-    assertNotNull(categories);
+    final List<Category> categories = categoryService.retrieveAllCategories(1, 1, "Mock Sort");
+    assertNotNull(categories, "Checking Not Null");
     verify(categoryRepositoryMock, atMostOnce()).findAll(any(Pageable.class));
     verify(categoryPageMock, atMostOnce()).getContent();
   }
@@ -62,8 +62,8 @@ class CategoryServiceImplTest {
   void testPersistCategory_returnsCategory() throws CategoryDetailAlreadyExistsException {
     when(categoryRepositoryMock.findById(anyString())).thenReturn(Optional.empty());
     when(categoryRepositoryMock.save(any(Category.class))).thenReturn(categoryMock);
-    Category category = categoryService.persistCategory(categoryMock);
-    assertNotNull(category);
+    final Category category = categoryService.persistCategory(categoryMock);
+    assertNotNull(category, "Checking Not Null");
     verify(categoryRepositoryMock, atMostOnce()).findById(anyString());
     verify(categoryRepositoryMock, atMostOnce()).save(any(Category.class));
   }
@@ -81,8 +81,8 @@ class CategoryServiceImplTest {
   void testUpdateCategory_returnsCategory() throws CategoryDetailDoesNotExistsException {
     when(categoryRepositoryMock.findById(anyString())).thenReturn(Optional.of(categoryMock));
     when(categoryRepositoryMock.save(any(Category.class))).thenReturn(categoryMock);
-    Category category = categoryService.updateCategory(categoryMock);
-    assertNotNull(category);
+    final Category category = categoryService.updateCategory(categoryMock);
+    assertNotNull(category, "Checking Not Null");
     verify(categoryRepositoryMock, atMostOnce()).findById(anyString());
     verify(categoryRepositoryMock, atMostOnce()).save(any(Category.class));
   }
@@ -100,8 +100,8 @@ class CategoryServiceImplTest {
   void testDeleteCategory_returnsCategoryDto() throws CategoryDetailDoesNotExistsException {
     when(categoryRepositoryMock.findById(anyString())).thenReturn(Optional.of(categoryMock));
     doNothing().when(categoryRepositoryMock).deleteById(anyString());
-    CategoryDto categoryDto = categoryService.deleteCategory("Mock Name");
-    assertNotNull(categoryDto);
+    final CategoryDto categoryDto = categoryService.deleteCategory("Mock Name");
+    assertNotNull(categoryDto, "Checking Not Null");
     verify(categoryRepositoryMock, atMostOnce()).findById(anyString());
     verify(categoryRepositoryMock, atMostOnce()).deleteById(anyString());
   }

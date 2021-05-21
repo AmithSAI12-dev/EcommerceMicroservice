@@ -10,12 +10,12 @@ import com.project.ecommerve.model.Category;
 
 public interface CategoryService {
 
-  public List<Category> retrieveAllCategories(Integer page, Integer size, String sortBy)
+  List<Category> retrieveAllCategories(Integer page, Integer size, String sortBy)
       throws NoCategoryAvailableException;
 
-  public Category persistCategory(Category category) throws CategoryDetailAlreadyExistsException;
+  Category persistCategory(Category category) throws CategoryDetailAlreadyExistsException;
 
-  public Category updateCategory(Category category) throws CategoryDetailDoesNotExistsException;
+  Category updateCategory(Category category) throws CategoryDetailDoesNotExistsException;
 
-  public CategoryDto deleteCategory(String name) throws CategoryDetailDoesNotExistsException;
+  CategoryDto deleteCategory(String name) throws CategoryDetailDoesNotExistsException;
 }

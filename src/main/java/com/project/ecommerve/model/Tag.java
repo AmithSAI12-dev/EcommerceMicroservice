@@ -31,7 +31,7 @@ public class Tag {
   @JsonIgnore
   private Set<Product> productList;
 
-  public Tag(TagDto tagDto) {
+  public Tag(final TagDto tagDto) {
     this.name = tagDto.getName();
     this.description = tagDto.getDescription();
   }

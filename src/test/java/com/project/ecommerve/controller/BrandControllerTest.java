@@ -36,76 +36,120 @@ class BrandControllerTest {
   void testGetAllBrands_returnsStatusOK() throws Exception {
     when(brandServiceMock.retrieveAllBrands(anyInt(), anyInt(), anyString()))
         .thenReturn(Collections.singletonList(new Brand()));
-    mockMvc.perform(get("/brand/")).andExpect(status().isOk());
+    final String contentAsString =
+        mockMvc
+            .perform(get("/brand/"))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testGetAllBrands_returnsStatusBadRequest_whenExceptionISThrown() throws Exception {
     when(brandServiceMock.retrieveAllBrands(anyInt(), anyInt(), anyString()))
         .thenThrow(new NoBrandsAvailableException("Mock Exception"));
-    mockMvc.perform(get("/brand/")).andExpect(status().isNoContent());
+    final String contentAsString =
+        mockMvc
+            .perform(get("/brand/"))
+            .andExpect(status().isNoContent())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testAddBrand_returnsStatusCreated() throws Exception {
     when(brandServiceMock.persistBrandDetail(any(Brand.class))).thenReturn(new Brand());
-    mockMvc
-        .perform(
-            post("/brand/add")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new Brand())))
-        .andExpect(status().isCreated());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                post("/brand/add")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new Brand())))
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testAddBrand_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(brandServiceMock.persistBrandDetail(any(Brand.class)))
         .thenThrow(new BrandDetailAlreadyExistsException("Mock Exception"));
-    mockMvc
-        .perform(
-            post("/brand/add")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new Brand())))
-        .andExpect(status().isBadRequest());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                post("/brand/add")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new Brand())))
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testUpdateBrand_returnsStatusCreated() throws Exception {
     when(brandServiceMock.updateBrandDetail(any(Brand.class))).thenReturn(new Brand());
-    mockMvc
-        .perform(
-            put("/brand/update")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new Brand())))
-        .andExpect(status().isCreated());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                put("/brand/update")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new Brand())))
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testUpdateBrand_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(brandServiceMock.updateBrandDetail(any(Brand.class)))
         .thenThrow(new BrandDetailDoesNotExistsException("Mock Exception"));
-    mockMvc
-        .perform(
-            put("/brand/update")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new Brand())))
-        .andExpect(status().isBadRequest());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                put("/brand/update")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new Brand())))
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testDeleteBrand_returnsStatusOK() throws Exception {
     when(brandServiceMock.deleteBrandDetail(anyString())).thenReturn(new BrandDto());
-    mockMvc
-        .perform(delete("/brand/delete").param("brandName", "Mock Brand Name"))
-        .andExpect(status().isOk());
+    final String contentAsString =
+        mockMvc
+            .perform(delete("/brand/delete").param("brandName", "Mock Brand Name"))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testDeleteBrand_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(brandServiceMock.deleteBrandDetail(anyString()))
         .thenThrow(new BrandDetailDoesNotExistsException("Mock Exception"));
-    mockMvc
-        .perform(delete("/brand/delete").param("brandName", "Mock Brand Name"))
-        .andExpect(status().isBadRequest());
+    final String contentAsString =
+        mockMvc
+            .perform(delete("/brand/delete").param("brandName", "Mock Brand Name"))
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 }

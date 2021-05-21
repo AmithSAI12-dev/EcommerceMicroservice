@@ -10,11 +10,11 @@ import com.project.ecommerve.model.Tag;
 
 public interface TagService {
 
-  public List<Tag> retrieveAllTags() throws NoTagsAvailableException;
+  List<Tag> retrieveAllTags() throws NoTagsAvailableException;
 
-  public Tag persistTag(Tag tag) throws TagAlreadyExistsException;
+  Tag persistTag(Tag tag) throws TagAlreadyExistsException;
 
-  public Tag updateTag(Tag tag) throws TagDoesNotExistsException;
+  Tag updateTag(Tag tag) throws TagDoesNotExistsException;
 
-  public TagDto deleteTag(String name) throws TagDoesNotExistsException;
+  TagDto deleteTag(String name) throws TagDoesNotExistsException;
 }

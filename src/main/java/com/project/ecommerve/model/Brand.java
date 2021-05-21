@@ -34,13 +34,13 @@ public class Brand {
   @JsonIgnore
   private List<Product> productList;
 
-  public Brand(BrandDto brandDto) {
+  public Brand(final BrandDto brandDto) {
     this.name = brandDto.getName();
     this.description = brandDto.getDescription();
     this.imageUrl = brandDto.getImageUrl();
   }
 
-  public Brand(String name) {
+  public Brand(final String name) {
     this.name = name;
   }
 }

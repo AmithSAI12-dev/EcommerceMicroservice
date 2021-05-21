@@ -36,82 +36,128 @@ class CategoryControllerTest {
   void testGetAllCategories_returnsStatusOk() throws Exception {
     when(categoryService.retrieveAllCategories(anyInt(), anyInt(), anyString()))
         .thenReturn(Collections.singletonList(new Category()));
-    mockMvc
-        .perform(
-            get("/category/").param("page", "0").param("size", "10").param("sortBy", "Mock Name"))
-        .andExpect(status().isOk());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                get("/category/")
+                    .param("page", "0")
+                    .param("size", "10")
+                    .param("sortBy", "Mock Name"))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testGetAllCategories_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(categoryService.retrieveAllCategories(anyInt(), anyInt(), anyString()))
         .thenThrow(new NoCategoryAvailableException("Mock Exception"));
-    mockMvc
-        .perform(
-            get("/category/").param("page", "0").param("size", "10").param("sortBy", "Mock Name"))
-        .andExpect(status().isNoContent());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                get("/category/")
+                    .param("page", "0")
+                    .param("size", "10")
+                    .param("sortBy", "Mock Name"))
+            .andExpect(status().isNoContent())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testAddCategory_returnsStatusCreated() throws Exception {
     when(categoryService.persistCategory(any(Category.class))).thenReturn(new Category());
-    mockMvc
-        .perform(
-            post("/category/add")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new Category())))
-        .andExpect(status().isCreated());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                post("/category/add")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new Category())))
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testAddCategory_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(categoryService.persistCategory(any(Category.class)))
         .thenThrow(new CategoryDetailAlreadyExistsException("Mock Exception"));
-    mockMvc
-        .perform(
-            post("/category/add")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new Category())))
-        .andExpect(status().isBadRequest());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                post("/category/add")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new Category())))
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testUpdateCategory_returnsStatusCreated() throws Exception {
     when(categoryService.updateCategory(any(Category.class))).thenReturn(new Category());
-    mockMvc
-        .perform(
-            put("/category/update")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new Category())))
-        .andExpect(status().isCreated());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                put("/category/update")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new Category())))
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testUpdateCategory_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(categoryService.updateCategory(any(Category.class)))
         .thenThrow(new CategoryDetailDoesNotExistsException("Mock Exception"));
-    mockMvc
-        .perform(
-            put("/category/update")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new Category())))
-        .andExpect(status().isBadRequest());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                put("/category/update")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new Category())))
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testDeleteCategory_returnsStatusOk() throws Exception {
     when(categoryService.deleteCategory(anyString())).thenReturn(new CategoryDto());
-    mockMvc
-        .perform(delete("/category/delete").param("name", "Mock Name"))
-        .andExpect(status().isOk());
+    final String contentAsString =
+        mockMvc
+            .perform(delete("/category/delete").param("name", "Mock Name"))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testDeleteCategory_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(categoryService.deleteCategory(anyString()))
         .thenThrow(new CategoryDetailDoesNotExistsException("Mock Exception"));
-    mockMvc
-        .perform(delete("/category/delete").param("name", "Mock Name"))
-        .andExpect(status().isBadRequest());
+    final String contentAsString =
+        mockMvc
+            .perform(delete("/category/delete").param("name", "Mock Name"))
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 }

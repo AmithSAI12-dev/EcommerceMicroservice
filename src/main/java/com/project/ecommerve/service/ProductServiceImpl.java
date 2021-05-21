@@ -26,17 +26,18 @@ public class ProductServiceImpl implements ProductService {
   private final String SUCCESS_MESSAGE = "Successfully Delete Product";
 
   @Autowired
-  public ProductServiceImpl(ProductRepository productRepository) {
+  public ProductServiceImpl(final ProductRepository productRepository) {
     this.productRepository = productRepository;
   }
 
   @Override
   public List<Product> retrieveAllProduct(
-      SearchDto searchDto, Integer page, Integer size, String sortBy)
+      final SearchDto searchDto, final Integer page, final Integer size, final String sortBy)
       throws NoProductAvailableException {
     List<Product> products;
     if (searchDto != null) {
-      // If there is search condition then fetch all products with search condition and pagination
+      // If there is search condition then fetch all products
+      // with search condition and pagination
       products =
           productRepository
               .findAll(buildSpecification(searchDto), PageRequest.of(page, size, Sort.by(sortBy)))
@@ -54,8 +55,9 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Product retrieveProduct(String productID) throws ProductDetailDoesNotExistsException {
-    Optional<Product> optionalProduct = productRepository.findById(productID);
+  public Product retrieveProduct(final String productID)
+      throws ProductDetailDoesNotExistsException {
+    final Optional<Product> optionalProduct = productRepository.findById(productID);
     if (optionalProduct.isEmpty()) {
       // If the product does not exists then throwing exception
       throw new ProductDetailDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
@@ -65,13 +67,13 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public Product persistProduct(Product product) {
+  public Product persistProduct(final Product product) {
     // Persisting Product
     return productRepository.save(product);
   }
 
   @Override
-  public Product updateProduct(Product product) throws ProductDetailDoesNotExistsException {
+  public Product updateProduct(final Product product) throws ProductDetailDoesNotExistsException {
     if (productRepository.findById(product.getId()).isEmpty()) {
       // If Product does not exists then throwing exception
       throw new ProductDetailDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
@@ -81,8 +83,9 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public ProductDto deleteProduct(String productId) throws ProductDetailDoesNotExistsException {
-    Optional<Product> optionalProduct = productRepository.findById(productId);
+  public ProductDto deleteProduct(final String productId)
+      throws ProductDetailDoesNotExistsException {
+    final Optional<Product> optionalProduct = productRepository.findById(productId);
     if (optionalProduct.isEmpty()) {
       // If Product does not exists then throwing Exception
       throw new ProductDetailDoesNotExistsException(ExceptionMessage.PRODUCT_DOES_NOT_EXISTS);
@@ -112,7 +115,7 @@ public class ProductServiceImpl implements ProductService {
         SUCCESS_MESSAGE);
   }
 
-  private Specification<Product> buildSpecification(SearchDto searchDto) {
+  private Specification<Product> buildSpecification(final SearchDto searchDto) {
     if (!searchDto.getCategories().isEmpty()
         && !searchDto.getBrands().isEmpty()
         && searchDto.getStart() != 0
