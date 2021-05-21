@@ -44,8 +44,8 @@ class BrandServiceImplTest {
   void testRetrieveAllBrands_returnsBrandList() throws NoBrandsAvailableException {
     when(mockBrandRepository.findAll(any(Pageable.class))).thenReturn(mockPage);
     when(mockPage.getContent()).thenReturn(Collections.singletonList(new Brand()));
-    List<Brand> brands = brandService.retrieveAllBrands(1, 1, "Mock Value");
-    assertNotNull(brands);
+    final List<Brand> brands = brandService.retrieveAllBrands(1, 1, "Mock Value");
+    assertNotNull(brands, "Checking Not Null");
     verify(mockBrandRepository, atMostOnce()).findAll(any(Pageable.class));
   }
 
@@ -61,8 +61,8 @@ class BrandServiceImplTest {
   void testAddBrandDetail_returnsBrand() throws BrandDetailAlreadyExistsException {
     when(mockBrandRepository.findById(anyString())).thenReturn(Optional.empty());
     when(mockBrandRepository.save(any(Brand.class))).thenReturn(new Brand());
-    Brand brand = brandService.persistBrandDetail(mockBrand);
-    assertNotNull(brand);
+    final Brand brand = brandService.persistBrandDetail(mockBrand);
+    assertNotNull(brand, "Checking Not Null");
     verify(mockBrandRepository, atMostOnce()).findById(anyString());
     verify(mockBrandRepository, atMostOnce()).save(any(Brand.class));
   }
@@ -79,8 +79,8 @@ class BrandServiceImplTest {
   void testUpdateBrandDetail_returnsBrand() throws BrandDetailDoesNotExistsException {
     when(mockBrandRepository.findById(anyString())).thenReturn(Optional.of(mockBrand));
     when(mockBrandRepository.save(any(Brand.class))).thenReturn(mockBrand);
-    Brand brand = brandService.updateBrandDetail(mockBrand);
-    assertNotNull(brand);
+    final Brand brand = brandService.updateBrandDetail(mockBrand);
+    assertNotNull(brand, "Checking Not Null");
     verify(mockBrandRepository, atMostOnce()).findById(anyString());
     verify(mockBrandRepository, atMostOnce()).save(any(Brand.class));
   }
@@ -97,8 +97,8 @@ class BrandServiceImplTest {
   void testDeleteBrandDetail_returnsBrandDto() throws BrandDetailDoesNotExistsException {
     when(mockBrandRepository.findById(anyString())).thenReturn(Optional.of(mockBrand));
     doNothing().when(mockBrandRepository).deleteById(anyString());
-    BrandDto brandDto = brandService.deleteBrandDetail("Mock Name");
-    assertNotNull(brandDto);
+    final BrandDto brandDto = brandService.deleteBrandDetail("Mock Name");
+    assertNotNull(brandDto, "Checking Not Null");
     verify(mockBrandRepository, atMostOnce()).findById(anyString());
     verify(mockBrandRepository, atMostOnce()).deleteById(anyString());
   }

@@ -1,5 +1,6 @@
 package com.project.ecommerve.controller;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -35,95 +36,142 @@ class ProductControllerTest {
   void testRetrieveAllProduct_returnsStatusOK() throws Exception {
     when(productService.retrieveAllProduct(any(SearchDto.class), anyInt(), anyInt(), anyString()))
         .thenReturn(Collections.singletonList(new Product()));
-    mockMvc
-        .perform(
-            get("/product/")
-                .param("page", "0")
-                .param("size", "10")
-                .param("sortBy", "Mock Name")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new SearchDto())))
-        .andExpect(status().isOk());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                get("/product/")
+                    .param("page", "0")
+                    .param("size", "10")
+                    .param("sortBy", "Mock Name")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new SearchDto())))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testRetrieveAllProduct_returnsBadRequest_whenExceptionIsThrown() throws Exception {
     when(productService.retrieveAllProduct(any(SearchDto.class), anyInt(), anyInt(), anyString()))
         .thenThrow(new NoProductAvailableException("Mock Exception"));
-    mockMvc
-        .perform(
-            get("/product/")
-                .param("page", "0")
-                .param("size", "10")
-                .param("sortBy", "Mock Name")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new SearchDto())))
-        .andExpect(status().isNoContent());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                get("/product/")
+                    .param("page", "0")
+                    .param("size", "10")
+                    .param("sortBy", "Mock Name")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new SearchDto())))
+            .andExpect(status().isNoContent())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testRetrieveProduct_returnsStatusOk() throws Exception {
     when(productService.retrieveProduct(anyString())).thenReturn(new Product());
-    mockMvc.perform(get("/product/find").param("productId", "Mock ID")).andExpect(status().isOk());
+    final String contentAsString =
+        mockMvc
+            .perform(get("/product/find").param("productId", "Mock ID"))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testRetrieveProduct_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(productService.retrieveProduct(anyString()))
         .thenThrow(new ProductDetailDoesNotExistsException("Mock Exception"));
-    mockMvc
-        .perform(get("/product/find").param("productId", "Mock ID"))
-        .andExpect(status().isBadRequest());
+    final String contentAsString =
+        mockMvc
+            .perform(get("/product/find").param("productId", "Mock ID"))
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testAddProduct_returnsStatusCreated() throws Exception {
     when(productService.persistProduct(any(Product.class))).thenReturn(new Product());
-    mockMvc
-        .perform(
-            post("/product/add")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new ProductDto())))
-        .andExpect(status().isCreated());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                post("/product/add")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new ProductDto())))
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testUpdateProduct_returnsStatusCreated() throws Exception {
     when(productService.updateProduct(any(Product.class))).thenReturn(new Product());
-    mockMvc
-        .perform(
-            put("/product/update")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new ProductDto())))
-        .andExpect(status().isCreated());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                put("/product/update")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new ProductDto())))
+            .andExpect(status().isCreated())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testUpdateProduct_returnsStatusBadRequest_whenExceptionIsThrown() throws Exception {
     when(productService.updateProduct(any(Product.class)))
         .thenThrow(new ProductDetailDoesNotExistsException("Mock Exception"));
-    mockMvc
-        .perform(
-            put("/product/update")
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(new ObjectMapper().writeValueAsString(new ProductDto())))
-        .andExpect(status().isBadRequest());
+    final String contentAsString =
+        mockMvc
+            .perform(
+                put("/product/update")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(new ObjectMapper().writeValueAsString(new ProductDto())))
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testDeleteProduct_returnsStatusOK() throws Exception {
     when(productService.deleteProduct(anyString())).thenReturn(new ProductDto());
-    mockMvc
-        .perform(delete("/product/delete").param("productId", "Mock ID"))
-        .andExpect(status().isOk());
+    final String contentAsString =
+        mockMvc
+            .perform(delete("/product/delete").param("productId", "Mock ID"))
+            .andExpect(status().isOk())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 
   @Test
   void testDeleteProduct_returnsStatusBadRequest_WhenExceptionIsThrown() throws Exception {
     when(productService.deleteProduct(anyString()))
         .thenThrow(new ProductDetailDoesNotExistsException("Mock Exception"));
-    mockMvc
-        .perform(delete("/product/delete").param("productId", "Mock ID"))
-        .andExpect(status().isBadRequest());
+    final String contentAsString =
+        mockMvc
+            .perform(delete("/product/delete").param("productId", "Mock ID"))
+            .andExpect(status().isBadRequest())
+            .andReturn()
+            .getResponse()
+            .getContentAsString();
+    assertNotNull(contentAsString, "Checking Not Null");
   }
 }

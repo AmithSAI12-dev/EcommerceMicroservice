@@ -38,8 +38,8 @@ class TagServiceImplTest {
   @Test
   void testRetrieveAllTags_returnsTagList() throws NoTagsAvailableException {
     when(tagRepositoryMock.findAll()).thenReturn(Collections.singletonList(tagMock));
-    List<Tag> tags = tagService.retrieveAllTags();
-    assertNotNull(tags);
+    final List<Tag> tags = tagService.retrieveAllTags();
+    assertNotNull(tags, "Checking Not Null");
     verify(tagRepositoryMock, atMostOnce()).findAll();
   }
 
@@ -54,8 +54,8 @@ class TagServiceImplTest {
   void testPersistTag_returnsTag() throws TagAlreadyExistsException {
     when(tagRepositoryMock.findById(anyString())).thenReturn(Optional.empty());
     when(tagRepositoryMock.save(any(Tag.class))).thenReturn(tagMock);
-    Tag tag = tagService.persistTag(tagMock);
-    assertNotNull(tag);
+    final Tag tag = tagService.persistTag(tagMock);
+    assertNotNull(tag, "Checking Not Null");
     verify(tagRepositoryMock, atMostOnce()).findById(anyString());
     verify(tagRepositoryMock, atMostOnce()).save(tagMock);
   }
@@ -71,8 +71,8 @@ class TagServiceImplTest {
   void testUpdateTag_returnsTag() throws TagDoesNotExistsException {
     when(tagRepositoryMock.findById(anyString())).thenReturn(Optional.of(tagMock));
     when(tagRepositoryMock.save(any(Tag.class))).thenReturn(tagMock);
-    Tag tag = tagService.updateTag(tagMock);
-    assertNotNull(tag);
+    final Tag tag = tagService.updateTag(tagMock);
+    assertNotNull(tag, "Checking Not Null");
     verify(tagRepositoryMock, atMostOnce()).findById(anyString());
     verify(tagRepositoryMock, atMostOnce()).save(tagMock);
   }
@@ -88,8 +88,8 @@ class TagServiceImplTest {
   void testDeleteTag_returnsTagDto() throws TagDoesNotExistsException {
     when(tagRepositoryMock.findById(anyString())).thenReturn(Optional.of(tagMock));
     doNothing().when(tagRepositoryMock).deleteById(anyString());
-    TagDto tagDto = tagService.deleteTag("Mock Name");
-    assertNotNull(tagDto);
+    final TagDto tagDto = tagService.deleteTag("Mock Name");
+    assertNotNull(tagDto, "Checking Not Null");
     verify(tagRepositoryMock, atMostOnce()).findById(anyString());
     verify(tagRepositoryMock, atMostOnce()).deleteById(anyString());
   }

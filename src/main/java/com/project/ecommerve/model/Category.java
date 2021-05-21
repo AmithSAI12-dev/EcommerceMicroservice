@@ -34,13 +34,13 @@ public class Category {
   @JsonIgnore
   private List<Product> productList;
 
-  public Category(CategoryDto categoryDto) {
+  public Category(final CategoryDto categoryDto) {
     this.name = categoryDto.getName();
     this.description = categoryDto.getDescription();
     this.imageUrl = categoryDto.getImageUrl();
   }
 
-  public Category(String name) {
+  public Category(final String name) {
     this.name = name;
   }
 }

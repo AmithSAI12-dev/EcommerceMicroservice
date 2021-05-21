@@ -47,13 +47,14 @@ class ProductServiceImplTest {
   @Test
   void testRetrieveAllProduct_returnsProductList_withCategorySearchFilter()
       throws NoProductAvailableException {
-    SearchDto searchDto = new SearchDto();
+    final SearchDto searchDto = new SearchDto();
     searchDto.setCategories(Collections.singletonList("Mock category"));
     when(productRepositoryMock.findAll(any(Specification.class), any(Pageable.class)))
         .thenReturn(productPageMock);
     when(productPageMock.getContent()).thenReturn(Collections.singletonList(productMock));
-    List<Product> productList = productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
-    assertNotNull(productList);
+    final List<Product> productList =
+        productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
+    assertNotNull(productList, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce())
         .findAll(any(Specification.class), any(Pageable.class));
     verify(productPageMock, atMostOnce()).getContent();
@@ -62,13 +63,14 @@ class ProductServiceImplTest {
   @Test
   void testRetrieveAllProduct_returnsProductList_withBrandSearchFilter()
       throws NoProductAvailableException {
-    SearchDto searchDto = new SearchDto();
+    final SearchDto searchDto = new SearchDto();
     searchDto.setBrands(Collections.singletonList("Mock brand"));
     when(productRepositoryMock.findAll(any(Specification.class), any(Pageable.class)))
         .thenReturn(productPageMock);
     when(productPageMock.getContent()).thenReturn(Collections.singletonList(productMock));
-    List<Product> productList = productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
-    assertNotNull(productList);
+    final List<Product> productList =
+        productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
+    assertNotNull(productList, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce())
         .findAll(any(Specification.class), any(Pageable.class));
     verify(productPageMock, atMostOnce()).getContent();
@@ -77,14 +79,15 @@ class ProductServiceImplTest {
   @Test
   void testRetrieveAllProduct_returnsProductList_withPriceSearchFilter()
       throws NoProductAvailableException {
-    SearchDto searchDto = new SearchDto();
+    final SearchDto searchDto = new SearchDto();
     searchDto.setStart(10);
     searchDto.setEnd(10);
     when(productRepositoryMock.findAll(any(Specification.class), any(Pageable.class)))
         .thenReturn(productPageMock);
     when(productPageMock.getContent()).thenReturn(Collections.singletonList(productMock));
-    List<Product> productList = productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
-    assertNotNull(productList);
+    final List<Product> productList =
+        productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
+    assertNotNull(productList, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce())
         .findAll(any(Specification.class), any(Pageable.class));
     verify(productPageMock, atMostOnce()).getContent();
@@ -93,14 +96,15 @@ class ProductServiceImplTest {
   @Test
   void testRetrieveAllProduct_returnsProductList_withBranAndCategorySearchFilter()
       throws NoProductAvailableException {
-    SearchDto searchDto = new SearchDto();
+    final SearchDto searchDto = new SearchDto();
     searchDto.setCategories(Collections.singletonList("Mock Category"));
     searchDto.setBrands(Collections.singletonList("Mock Brand"));
     when(productRepositoryMock.findAll(any(Specification.class), any(Pageable.class)))
         .thenReturn(productPageMock);
     when(productPageMock.getContent()).thenReturn(Collections.singletonList(productMock));
-    List<Product> productList = productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
-    assertNotNull(productList);
+    final List<Product> productList =
+        productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
+    assertNotNull(productList, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce())
         .findAll(any(Specification.class), any(Pageable.class));
     verify(productPageMock, atMostOnce()).getContent();
@@ -109,7 +113,7 @@ class ProductServiceImplTest {
   @Test
   void testRetrieveAllProduct_returnsProductList_withAllSearchFilter()
       throws NoProductAvailableException {
-    SearchDto searchDto = new SearchDto();
+    final SearchDto searchDto = new SearchDto();
     searchDto.setCategories(Collections.singletonList("Mock Category"));
     searchDto.setBrands(Collections.singletonList("Mock Brand"));
     searchDto.setStart(10);
@@ -117,8 +121,9 @@ class ProductServiceImplTest {
     when(productRepositoryMock.findAll(any(Specification.class), any(Pageable.class)))
         .thenReturn(productPageMock);
     when(productPageMock.getContent()).thenReturn(Collections.singletonList(productMock));
-    List<Product> productList = productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
-    assertNotNull(productList);
+    final List<Product> productList =
+        productService.retrieveAllProduct(searchDto, 0, 10, "Mock Sort");
+    assertNotNull(productList, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce())
         .findAll(any(Specification.class), any(Pageable.class));
     verify(productPageMock, atMostOnce()).getContent();
@@ -129,8 +134,8 @@ class ProductServiceImplTest {
       throws NoProductAvailableException {
     when(productRepositoryMock.findAll(any(Pageable.class))).thenReturn(productPageMock);
     when(productPageMock.getContent()).thenReturn(Collections.singletonList(productMock));
-    List<Product> productList = productService.retrieveAllProduct(null, 0, 10, "Mock Sort");
-    assertNotNull(productList);
+    final List<Product> productList = productService.retrieveAllProduct(null, 0, 10, "Mock Sort");
+    assertNotNull(productList, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce()).findAll(any(Pageable.class));
     verify(productPageMock, atMostOnce()).getContent();
   }
@@ -147,8 +152,8 @@ class ProductServiceImplTest {
   @Test
   void testRetrieveProduct_returnsProduct() throws ProductDetailDoesNotExistsException {
     when(productRepositoryMock.findById(anyString())).thenReturn(Optional.of(productMock));
-    Product product = productService.retrieveProduct("Mock ID");
-    assertNotNull(product);
+    final Product product = productService.retrieveProduct("Mock ID");
+    assertNotNull(product, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce()).findById(anyString());
   }
 
@@ -163,8 +168,8 @@ class ProductServiceImplTest {
   @Test
   void testPersistProduct_returnsProduct() {
     when(productRepositoryMock.save(any(Product.class))).thenReturn(productMock);
-    Product product = productService.persistProduct(productMock);
-    assertNotNull(product);
+    final Product product = productService.persistProduct(productMock);
+    assertNotNull(product, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce()).save(any(Product.class));
   }
 
@@ -172,8 +177,8 @@ class ProductServiceImplTest {
   void testUpdateProduct_returnsProduct() throws ProductDetailDoesNotExistsException {
     when(productRepositoryMock.findById(anyString())).thenReturn(Optional.of(productMock));
     when(productRepositoryMock.save(any(Product.class))).thenReturn(productMock);
-    Product product = productService.updateProduct(productMock);
-    assertNotNull(product);
+    final Product product = productService.updateProduct(productMock);
+    assertNotNull(product, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce()).findById(anyString());
     verify(productRepositoryMock, atMostOnce()).save(any(Product.class));
   }
@@ -190,7 +195,8 @@ class ProductServiceImplTest {
   void testDeleteProduct_returnsProductDto() throws ProductDetailDoesNotExistsException {
     when(productRepositoryMock.findById(anyString())).thenReturn(Optional.of(productMock));
     doNothing().when(productRepositoryMock).deleteById(anyString());
-    ProductDto productDto = productService.deleteProduct("Mock Product ID");
+    final ProductDto productDto = productService.deleteProduct("Mock Product ID");
+    assertNotNull(productDto, "Checking Not Null");
     verify(productRepositoryMock, atMostOnce()).findById(anyString());
     verify(productRepositoryMock, atMostOnce()).deleteById(anyString());
   }

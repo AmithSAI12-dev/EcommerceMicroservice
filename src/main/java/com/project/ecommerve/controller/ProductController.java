@@ -21,45 +21,45 @@ public class ProductController {
   private final ProductService productService;
 
   @Autowired
-  public ProductController(ProductService productService) {
+  public ProductController(final ProductService productService) {
     this.productService = productService;
   }
 
   @GetMapping(value = "/")
   public ResponseEntity<List<Product>> getAllProducts(
-      @RequestBody(required = false) SearchDto searchDto,
-      @RequestParam(defaultValue = "0", required = false) Integer page,
-      @RequestParam(defaultValue = "10", required = false) Integer size,
-      @RequestParam(defaultValue = "name", required = false) String sortBy)
+      @RequestBody(required = false) final SearchDto searchDto,
+      @RequestParam(defaultValue = "0", required = false) final Integer page,
+      @RequestParam(defaultValue = "10", required = false) final Integer size,
+      @RequestParam(defaultValue = "name", required = false) final String sortBy)
       throws NoProductAvailableException {
-    List<Product> products = productService.retrieveAllProduct(searchDto, page, size, sortBy);
+    final List<Product> products = productService.retrieveAllProduct(searchDto, page, size, sortBy);
     return new ResponseEntity<>(products, HttpStatus.OK);
   }
 
   @GetMapping(value = "/find")
-  public ResponseEntity<Product> getProduct(@RequestParam String productId)
+  public ResponseEntity<Product> getProduct(@RequestParam final String productId)
       throws ProductDetailDoesNotExistsException {
-    Product product = productService.retrieveProduct(productId);
+    final Product product = productService.retrieveProduct(productId);
     return new ResponseEntity<>(product, HttpStatus.OK);
   }
 
   @PostMapping(value = "/add")
-  public ResponseEntity<Product> addProduct(@RequestBody ProductDto productDto) {
-    Product product = productService.persistProduct(new Product(productDto));
+  public ResponseEntity<Product> addProduct(@RequestBody final ProductDto productDto) {
+    final Product product = productService.persistProduct(new Product(productDto));
     return new ResponseEntity<>(product, HttpStatus.CREATED);
   }
 
   @PutMapping(value = "/update")
-  public ResponseEntity<Product> updateProduct(@RequestBody ProductDto productDto)
+  public ResponseEntity<Product> updateProduct(@RequestBody final ProductDto productDto)
       throws ProductDetailDoesNotExistsException {
-    Product product = productService.updateProduct(new Product(productDto));
+    final Product product = productService.updateProduct(new Product(productDto));
     return new ResponseEntity<>(product, HttpStatus.CREATED);
   }
 
   @DeleteMapping(value = "/delete")
-  public ResponseEntity<ProductDto> deleteProduct(@RequestParam String productId)
+  public ResponseEntity<ProductDto> deleteProduct(@RequestParam final String productId)
       throws ProductDetailDoesNotExistsException {
-    ProductDto productDto = productService.deleteProduct(productId);
+    final ProductDto productDto = productService.deleteProduct(productId);
     return new ResponseEntity<>(productDto, HttpStatus.OK);
   }
 }

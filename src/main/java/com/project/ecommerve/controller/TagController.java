@@ -21,33 +21,34 @@ public class TagController {
   private final TagService tagService;
 
   @Autowired
-  public TagController(TagService tagService) {
+  public TagController(final TagService tagService) {
     this.tagService = tagService;
   }
 
   @GetMapping(value = "/")
   public ResponseEntity<List<Tag>> getAllTags() throws NoTagsAvailableException {
-    List<Tag> tags = tagService.retrieveAllTags();
+    final List<Tag> tags = tagService.retrieveAllTags();
     return new ResponseEntity<>(tags, HttpStatus.OK);
   }
 
   @PostMapping(value = "/add")
-  public ResponseEntity<Tag> addTag(@RequestBody TagDto tagDto) throws TagAlreadyExistsException {
-    Tag tag = tagService.persistTag(new Tag(tagDto));
+  public ResponseEntity<Tag> addTag(@RequestBody final TagDto tagDto)
+      throws TagAlreadyExistsException {
+    final Tag tag = tagService.persistTag(new Tag(tagDto));
     return new ResponseEntity<>(tag, HttpStatus.CREATED);
   }
 
   @PutMapping(value = "/update")
-  public ResponseEntity<Tag> updateTag(@RequestBody TagDto tagDto)
+  public ResponseEntity<Tag> updateTag(@RequestBody final TagDto tagDto)
       throws TagDoesNotExistsException {
-    Tag tag = tagService.updateTag(new Tag(tagDto));
+    final Tag tag = tagService.updateTag(new Tag(tagDto));
     return new ResponseEntity<>(tag, HttpStatus.CREATED);
   }
 
   @DeleteMapping(value = "/delete")
-  public ResponseEntity<TagDto> deleteTag(@RequestParam String name)
+  public ResponseEntity<TagDto> deleteTag(@RequestParam final String name)
       throws TagDoesNotExistsException {
-    TagDto tagDto = tagService.deleteTag(name);
+    final TagDto tagDto = tagService.deleteTag(name);
     return new ResponseEntity<>(tagDto, HttpStatus.OK);
   }
 }

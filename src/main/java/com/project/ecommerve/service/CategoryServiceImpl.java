@@ -24,15 +24,16 @@ public class CategoryServiceImpl implements CategoryService {
   private final String SUCCESS_MESSAGE = "Successfully Deleted Category";
 
   @Autowired
-  public CategoryServiceImpl(CategoryRepository categoryRepository) {
+  public CategoryServiceImpl(final CategoryRepository categoryRepository) {
     this.categoryRepository = categoryRepository;
   }
 
   @Override
-  public List<Category> retrieveAllCategories(Integer page, Integer size, String sortBy)
+  public List<Category> retrieveAllCategories(
+      final Integer page, final Integer size, final String sortBy)
       throws NoCategoryAvailableException {
     // Fetching Category from database, Note: Pagination and Sorting is used
-    Page<Category> categoryPage =
+    final Page<Category> categoryPage =
         categoryRepository.findAll(PageRequest.of(page, size, Sort.by(sortBy)));
     if (categoryPage.isEmpty()) {
       // If No Category exists then throwing Exception
@@ -43,7 +44,8 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public Category persistCategory(Category category) throws CategoryDetailAlreadyExistsException {
+  public Category persistCategory(final Category category)
+      throws CategoryDetailAlreadyExistsException {
     if (categoryRepository.findById(category.getName()).isPresent()) {
       // If Category already exists, then throwing Exception
       throw new CategoryDetailAlreadyExistsException(ExceptionMessage.CATEGORY_ALREADY_EXISTS);
@@ -53,7 +55,8 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public Category updateCategory(Category category) throws CategoryDetailDoesNotExistsException {
+  public Category updateCategory(final Category category)
+      throws CategoryDetailDoesNotExistsException {
     if (categoryRepository.findById(category.getName()).isEmpty()) {
       // If Category Does not exists then throwing Exception
       throw new CategoryDetailDoesNotExistsException(ExceptionMessage.CATEGORY_DOES_NOT_EXISTS);
@@ -63,8 +66,8 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
-  public CategoryDto deleteCategory(String name) throws CategoryDetailDoesNotExistsException {
-    Optional<Category> optionalCategory = categoryRepository.findById(name);
+  public CategoryDto deleteCategory(final String name) throws CategoryDetailDoesNotExistsException {
+    final Optional<Category> optionalCategory = categoryRepository.findById(name);
     if (optionalCategory.isEmpty()) {
       // If Category Does not exists then throwing Exception
       throw new CategoryDetailDoesNotExistsException(ExceptionMessage.CATEGORY_DOES_NOT_EXISTS);
