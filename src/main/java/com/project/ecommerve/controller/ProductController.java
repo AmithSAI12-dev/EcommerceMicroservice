@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import com.project.ecommerve.model.Product;
 import com.project.ecommerve.service.ProductService;
 
 @RestController
-@RequestMapping(value = "/product")
+@RequestMapping("/product")
 public class ProductController {
 
   private final ProductService productService;
@@ -25,7 +26,7 @@ public class ProductController {
     this.productService = productService;
   }
 
-  @GetMapping(value = "/")
+  @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Product>> getAllProducts(
       @RequestBody(required = false) final SearchDto searchDto,
       @RequestParam(defaultValue = "0", required = false) final Integer page,
@@ -36,27 +37,27 @@ public class ProductController {
     return new ResponseEntity<>(products, HttpStatus.OK);
   }
 
-  @GetMapping(value = "/find")
+  @GetMapping(value = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Product> getProduct(@RequestParam final String productId)
       throws ProductDetailDoesNotExistsException {
     final Product product = productService.retrieveProduct(productId);
     return new ResponseEntity<>(product, HttpStatus.OK);
   }
 
-  @PostMapping(value = "/add")
+  @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Product> addProduct(@RequestBody final ProductDto productDto) {
     final Product product = productService.persistProduct(new Product(productDto));
     return new ResponseEntity<>(product, HttpStatus.CREATED);
   }
 
-  @PutMapping(value = "/update")
+  @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Product> updateProduct(@RequestBody final ProductDto productDto)
       throws ProductDetailDoesNotExistsException {
     final Product product = productService.updateProduct(new Product(productDto));
     return new ResponseEntity<>(product, HttpStatus.CREATED);
   }
 
-  @DeleteMapping(value = "/delete")
+  @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<ProductDto> deleteProduct(@RequestParam final String productId)
       throws ProductDetailDoesNotExistsException {
     final ProductDto productDto = productService.deleteProduct(productId);

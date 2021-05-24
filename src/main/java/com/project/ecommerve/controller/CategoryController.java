@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,8 @@ import com.project.ecommerve.model.Category;
 import com.project.ecommerve.service.CategoryService;
 
 @RestController
-@RequestMapping(value = "/category")
-@CrossOrigin(value = "http://localhost:4200")
+@RequestMapping("/category")
+@CrossOrigin("http://localhost:4200")
 public class CategoryController {
 
   private final CategoryService categoryService;
@@ -26,7 +27,7 @@ public class CategoryController {
     this.categoryService = categoryService;
   }
 
-  @GetMapping(value = "/")
+  @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Category>> getAllCategories(
       @RequestParam(defaultValue = "0", required = false) final Integer page,
       @RequestParam(defaultValue = "10", required = false) final Integer size,
@@ -36,21 +37,21 @@ public class CategoryController {
     return new ResponseEntity<>(categories, HttpStatus.OK);
   }
 
-  @PostMapping(value = "/add")
+  @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Category> addCategory(@RequestBody final CategoryDto categoryDto)
       throws CategoryDetailAlreadyExistsException {
     final Category category = categoryService.persistCategory(new Category(categoryDto));
     return new ResponseEntity<>(category, HttpStatus.CREATED);
   }
 
-  @PutMapping(value = "/update")
+  @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Category> updateCategory(@RequestBody final CategoryDto categoryDto)
       throws CategoryDetailDoesNotExistsException {
     final Category category = categoryService.updateCategory(new Category(categoryDto));
     return new ResponseEntity<>(category, HttpStatus.CREATED);
   }
 
-  @DeleteMapping(value = "/delete")
+  @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<CategoryDto> deleteCategory(@RequestParam final String name)
       throws CategoryDetailDoesNotExistsException {
     final CategoryDto categoryDto = categoryService.deleteCategory(name);
