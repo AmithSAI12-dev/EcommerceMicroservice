@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class BrandController {
     this.brandService = brandService;
   }
 
-  @GetMapping(value = "/")
+  @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<List<Brand>> getAllBrands(
       @RequestParam(defaultValue = "0", required = false) final Integer page,
       @RequestParam(defaultValue = "6", required = false) final Integer size,
@@ -34,21 +35,21 @@ public class BrandController {
     return new ResponseEntity<>(brands, HttpStatus.OK);
   }
 
-  @PostMapping(value = "/add")
+  @PostMapping(value = "/add", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Brand> addBrand(@RequestBody final BrandDto brandDto)
       throws BrandDetailAlreadyExistsException {
     final Brand brand = brandService.persistBrandDetail(new Brand(brandDto));
     return new ResponseEntity<>(brand, HttpStatus.CREATED);
   }
 
-  @PutMapping(value = "/update")
+  @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Brand> updateBrand(@RequestBody final BrandDto brandDto)
       throws BrandDetailDoesNotExistsException {
     final Brand brand = brandService.updateBrandDetail(new Brand(brandDto));
     return new ResponseEntity<>(brand, HttpStatus.CREATED);
   }
 
-  @DeleteMapping(value = "/delete")
+  @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<BrandDto> deleteBrand(@RequestParam final String brandName)
       throws BrandDetailDoesNotExistsException {
     final BrandDto brandDto = brandService.deleteBrandDetail(brandName);

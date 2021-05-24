@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    show-sql: true
+
+application:
+  hostname: postgres
+  port: 5432
+  username: postgres
+  password: amithsai
+  database: ecommerce_db_test

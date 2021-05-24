@@ -16,16 +16,15 @@ import com.project.ecommerve.exception.*;
 @NoArgsConstructor
 public class BadRequestExceptionHandler {
 
-  @ExceptionHandler(
-      value = {
-        BrandDetailDoesNotExistsException.class,
-        BrandDetailAlreadyExistsException.class,
-        CategoryDetailDoesNotExistsException.class,
-        CategoryDetailAlreadyExistsException.class,
-        ProductDetailDoesNotExistsException.class,
-        TagAlreadyExistsException.class,
-        TagDoesNotExistsException.class
-      })
+  @ExceptionHandler({
+    BrandDetailDoesNotExistsException.class,
+    BrandDetailAlreadyExistsException.class,
+    CategoryDetailDoesNotExistsException.class,
+    CategoryDetailAlreadyExistsException.class,
+    ProductDetailDoesNotExistsException.class,
+    TagAlreadyExistsException.class,
+    TagDoesNotExistsException.class
+  })
   public ResponseEntity<ExceptionFormat> handleException(final Exception e) {
     return new ResponseEntity<>(
         new ExceptionFormat(e.getMessage(), HttpStatus.BAD_REQUEST, ZonedDateTime.now()),

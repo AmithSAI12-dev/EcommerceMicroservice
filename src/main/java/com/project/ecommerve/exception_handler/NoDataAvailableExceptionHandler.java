@@ -19,13 +19,12 @@ import com.project.ecommerve.exception.NoTagsAvailableException;
 @NoArgsConstructor
 public class NoDataAvailableExceptionHandler {
 
-  @ExceptionHandler(
-      value = {
-        NoBrandsAvailableException.class,
-        NoCategoryAvailableException.class,
-        NoProductAvailableException.class,
-        NoTagsAvailableException.class
-      })
+  @ExceptionHandler({
+    NoBrandsAvailableException.class,
+    NoCategoryAvailableException.class,
+    NoProductAvailableException.class,
+    NoTagsAvailableException.class
+  })
   public ResponseEntity<ExceptionFormat> handleException(final Exception e) {
     return new ResponseEntity<>(
         new ExceptionFormat(e.getMessage(), HttpStatus.NO_CONTENT, ZonedDateTime.now()),
